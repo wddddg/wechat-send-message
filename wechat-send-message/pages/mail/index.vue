@@ -6,7 +6,13 @@
 				{{item.name}}
 			</view>
 		</view>
-		<view class="mail-data-list" v-if="false"></view>
+		<view class="mail-data-list" v-if="true">
+			<view class="mail-data-item" v-for="(item, index) in 10" :key="index" @click="goDetails(item)">
+				<view class="author-name"><span>xxxxx</span>收</view>
+				<view class="mail-item-content">66666666666666 {{ item }}</view>
+				<view class="mail-item-time">2023-03-03 10:34:41</view>
+			</view>
+		</view>
 		<view class="no-mail-data" v-else>
 			<NoData />
 		</view>
@@ -26,6 +32,11 @@
 		name: '我收到的',
 		type: 2
 	}]
+	const goDetails = (item) => {
+		uni.navigateTo({
+			url: '/mail/Details?id=' + item
+		})
+	}
 </script>
 
 <style scoped lang="scss">
@@ -52,7 +63,33 @@
 			}
 		}
 
-		.mail-data-list {}
+		.mail-data-list {
+			.mail-data-item {
+				padding: 20rpx 0;
+				border-bottom: 1rpx solid #C0C4CC;
+				font-size: 24rpx;
+
+				.author-name {
+					color: #909399;
+
+					span {
+						margin-right: 10rpx;
+					}
+				}
+
+				.mail-item-content {
+					display: inline-block;
+					padding: 20rpx;
+					background-color: rgba(#162a89, .5);
+					border-radius: 20rpx;
+					margin: 20rpx 0;
+				}
+
+				.mail-item-time {
+					color: #909399;
+				}
+			}
+		}
 
 		.no-mail-data {
 			margin-top: 120rpx;

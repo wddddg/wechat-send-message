@@ -20,6 +20,20 @@
 			}
 		}
 	],
+	"subPackages": [{
+		"root": "mail",
+		"pages": [{
+			"path": "Details",
+			"style": {
+				"navigationBarTitleText": "短信详情"
+			}
+		}, {
+			"path": "SendMessage",
+			"style": {
+				"navigationBarTitleText": "给Ta发一条短信吧！"
+			}
+		}]
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
