@@ -11,10 +11,10 @@ $http.interceptors.request.use(
 		// 在发送请求前做些什么
 		//请求前加入token
 		let user = uni.getStorageSync("user");
-		if (!user?.token) {
-			uni.$emit('loginError')
-			return config
-		}
+		// if (!user?.token) {
+		// 	uni.$emit('loginError')
+		// 	return config
+		// }
 		if (user.token) {
 			config.header['X-Access-Token'] = user.token;
 		};
