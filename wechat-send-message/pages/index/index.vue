@@ -11,11 +11,23 @@
 </template>
 
 <script setup>
-const goSendMessage = () =>[
-	uni.navigateTo({
-		url: '/mail/SendMessage'
+	// import { onLoad } from '@dcloudio/uni-app'
+	import {
+		onBeforeMount
+	} from 'vue'
+	const goSendMessage = () => [
+		uni.navigateTo({
+			url: '/mail/SendMessage'
+		})
+	]
+	onBeforeMount(() => {
+		uni.login({
+			provider: 'weixin', //使用微信登录
+			success(loginRes) {
+				console.log(loginRes);
+			}
+		});
 	})
-]
 </script>
 
 <style scoped lang="scss">
@@ -26,17 +38,21 @@ const goSendMessage = () =>[
 			height: 800rpx;
 			box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 			padding: 60rpx 80rpx;
-			view{
+
+			view {
 				margin: 30rpx 0;
 			}
-			view:last-child{
+
+			view:last-child {
 				margin-top: 60rpx;
 			}
-			.you-look{
+
+			.you-look {
 				display: inline;
 				padding: 12rpx 20rpx;
 				background-color: rgb(203, 203, 203);
 			}
+
 			.to-send-text-messages {
 				display: inline;
 				height: 60rpx;
@@ -45,7 +61,8 @@ const goSendMessage = () =>[
 				color: #fff;
 				background: $uni-theme-btn-color;
 				font-size: 30rpx;
-				&::after{
+
+				&::after {
 					border-radius: 80rpx;
 				}
 			}
