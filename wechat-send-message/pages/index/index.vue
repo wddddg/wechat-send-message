@@ -13,6 +13,9 @@
 <script setup>
 	// import { onLoad } from '@dcloudio/uni-app'
 	import {
+		login
+	} from '@/api/index.js'
+	import {
 		onBeforeMount
 	} from 'vue'
 	const goSendMessage = () => [
@@ -20,13 +23,18 @@
 			url: '/mail/SendMessage'
 		})
 	]
-	onBeforeMount(() => {
+	onBeforeMount(async () => {
 		uni.login({
 			provider: 'weixin', //使用微信登录
-			success(loginRes) {
-				console.log(loginRes);
+			success: async (loginRes) => {
+				await login({
+					code: loginRes.code
+				})
 			}
 		});
+		uni.$on('loginError', () => {
+
+		})
 	})
 </script>
 
