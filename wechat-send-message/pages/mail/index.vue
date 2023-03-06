@@ -8,7 +8,7 @@
 		</view>
 		<view class="mail-data-list" v-if="true">
 			<view class="mail-data-item" v-for="(item, index) in 10" :key="index" @click="goDetails(item)">
-				<view class="author-name"><span>xxxxx</span>收</view>
+				<view class="author-name"><label>xxxxx</label>收</view>
 				<view class="mail-item-content">66666666666666 {{ item }}</view>
 				<view class="mail-item-time">2023-03-03 10:34:41</view>
 			</view>
@@ -72,7 +72,7 @@
 				.author-name {
 					color: #909399;
 
-					span {
+					label {
 						margin-right: 10rpx;
 					}
 				}
