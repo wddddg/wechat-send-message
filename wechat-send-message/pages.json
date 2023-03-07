@@ -33,6 +33,16 @@
 				"navigationBarTitleText": "给Ta发一条短信吧！"
 			}
 		}]
+	}, {
+		"root": "mine",
+		"pages": [
+			{
+				"path": "UserAgreement",
+				"style": {
+					"navigationBarTitleText": "用户协议"
+				}
+			}
+		]
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
