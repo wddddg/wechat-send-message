@@ -3,18 +3,11 @@
 		login
 	} from '@/api/index.js'
 	export default {
-		onLaunch: function() {
-			let user = uni.getStorageSync("user");
-			if (!user?.token) {
-				uni.login({
-					provider: 'weixin', //使用微信登录
-					success: async (loginRes) => {
-						await login({
-							code: loginRes.code
-						})
-					}
-				});
-			}
+		onLaunch: async function() {
+			await this.userLogin()
+			await uni.$on('loginError', async () => {
+				await this.userLogin()
+			})
 			console.log('App Launch')
 		},
 		onShow: function() {
@@ -22,6 +15,24 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+		methods: {
+			async userLogin() {
+				let token = uni.getStorageSync("token");
+				if (!token) {
+					await uni.login({
+						provider: 'weixin', //使用微信登录
+						success: async (loginRes) => {
+							await login(loginRes.code).then(res => {
+								const {
+									data
+								} = res
+								uni.setStorageSync('token', data.token)
+							})
+						}
+					});
+				}
+			}
 		}
 	}
 </script>

@@ -10,14 +10,14 @@ $http.interceptors.request.use(
 	config => {
 		// 在发送请求前做些什么
 		//请求前加入token
-		let user = uni.getStorageSync("user");
-		// if (!user?.token) {
-		// 	uni.$emit('loginError')
-		// 	return config
-		// }
-		if (user.token) {
-			config.header['X-Access-Token'] = user.token;
-		};
+		if (!config.noToken) {
+			let token = uni.getStorageSync("token");
+			if (token) {
+				config.header['X-Access-Token'] = token;
+			} else {
+				uni.$emit('loginError')
+			};
+		}
 		return config
 	},
 	error => {
@@ -38,6 +38,8 @@ $http.interceptors.response.use(
 			});
 		}
 		if (response.data.code == 510) {
+			uni.removeStorageSync('token')
+			uni.$emit('loginError')
 			uni.showToast({
 				title: '操作过时，请重新登录',
 				duration: 1000,
