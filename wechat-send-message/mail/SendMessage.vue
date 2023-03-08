@@ -1,7 +1,9 @@
 <template>
 	<view class="">
 		<view class="send-message-tip">
-			<uni-notice-bar :speed="20" showIcon scrollable single text="网络不是法外之地，请大家自觉遵守法律法规。所有短信都会经过人工审核，请勿发送欺诈、辱骂、色情等违规信息！若发现违规内容，我们会将违规用户的信息以及IP地址上报公安系统以及中央网信办违法和不良信息举报中心！"></uni-notice-bar>
+			<uni-notice-bar :speed="20" showIcon scrollable single
+				text="网络不是法外之地，请大家自觉遵守法律法规。所有短信都会经过人工审核，请勿发送欺诈、辱骂、色情等违规信息！若发现违规内容，我们会将违规用户的信息以及IP地址上报公安系统以及中央网信办违法和不良信息举报中心！">
+			</uni-notice-bar>
 		</view>
 		<view class="message-content-body">
 			<view class="message-content-box">
@@ -25,11 +27,14 @@
 						</uni-forms-item>
 					</view>
 					<view class="radio-box" @click="changeAnonymousSendRadio">
-						<radio :value="baseFormData.anonymousSend" color="#162a89" class="radio-input" :checked="anonymousSendRadio" />匿名发送
+						<radio :value="baseFormData.anonymousSend" color="#162a89" class="radio-input"
+							:checked="anonymousSendRadio" />匿名发送
 					</view>
 					<view class="radio-box" @click="changeReadAndAppeptRadio">
-						<radio :value="baseFormData.readAndAppept" color="#162a89" class="radio-input" :checked="readAndAppeptRadio" />
-						我已阅读并接受<label @click.stop="goUserAgreement(1)">《用户协议》、</label><label @click.stop="goUserAgreement(2)">《隐私政策》</label>
+						<radio :value="baseFormData.readAndAppept" color="#162a89" class="radio-input"
+							:checked="readAndAppeptRadio" />
+						我已阅读并接受<label @click.stop="goUserAgreement(1)">《用户协议》、</label><label
+							@click.stop="goUserAgreement(2)">《隐私政策》</label>
 					</view>
 				</uni-forms>
 				<view>
@@ -39,26 +44,31 @@
 				<view class="use-help">使用帮助</view>
 			</view>
 		</view>
+		<BindingPhone v-model:value="showBindingPhone" />
 	</view>
 </template>
 
 <script setup>
+	import BindingPhone from '@/components/BindingPhone.vue'
 	import {
-		ref, unref
+		ref,
+		unref
 	} from 'vue'
+	const showBindingPhone = ref(false)
 	const baseFormData = ref({})
 	const anonymousSendRadio = ref(false)
 	const readAndAppeptRadio = ref(false)
 	const sendMessage = () => {
-		uni.showToast({
-			title: '发送成功',
-			icon: 'success'
-		})
+		showBindingPhone.value = true
+		// uni.showToast({
+		// 	title: '发送成功',
+		// 	icon: 'success'
+		// })
 	}
-	const changeAnonymousSendRadio = () =>{
+	const changeAnonymousSendRadio = () => {
 		anonymousSendRadio.value = !anonymousSendRadio.value
 	}
-	const changeReadAndAppeptRadio = () =>{
+	const changeReadAndAppeptRadio = () => {
 		readAndAppeptRadio.value = !readAndAppeptRadio.value
 	}
 	const goUserAgreement = (value) => {
