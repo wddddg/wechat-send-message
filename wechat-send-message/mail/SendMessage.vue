@@ -26,15 +26,24 @@
 								v-model="baseFormData.datetimesingle" placeholder="请选择发送时间" />
 						</uni-forms-item>
 					</view>
-					<view class="radio-box" @click="changeAnonymousSendRadio">
-						<radio :value="baseFormData.anonymousSend" color="#162a89" class="radio-input"
-							:checked="anonymousSendRadio" />匿名发送
+					<view class="radio-box">
+						<radio-group @change="changeAnonymousSendRadio">
+							<radio :value="baseFormData.anonymousSend" color="#162a89" class="radio-input"
+								:checked="anonymousSendRadio" />
+						</radio-group>
+						<view @click="changeAnonymousSendRadio">
+							匿名发送
+						</view>
 					</view>
-					<view class="radio-box" @click="changeReadAndAppeptRadio">
-						<radio :value="baseFormData.readAndAppept" color="#162a89" class="radio-input"
-							:checked="readAndAppeptRadio" />
-						我已阅读并接受<label @click.stop="goUserAgreement(1)">《用户协议》、</label><label
-							@click.stop="goUserAgreement(2)">《隐私政策》</label>
+					<view class="radio-box">
+						<radio-group @change="changeReadAndAppeptRadio">
+							<radio :value="baseFormData.readAndAppept" color="#162a89" class="radio-input"
+								:checked="readAndAppeptRadio" />
+						</radio-group>
+						<view @click="changeReadAndAppeptRadio">
+							我已阅读并接受<label @click.stop="goUserAgreement(1)">《用户协议》、</label><label
+								@click.stop="goUserAgreement(2)">《隐私政策》</label>
+						</view>
 					</view>
 				</uni-forms>
 				<view>
@@ -59,14 +68,25 @@
 	const anonymousSendRadio = ref(false)
 	const readAndAppeptRadio = ref(false)
 	const sendMessage = () => {
-		showBindingPhone.value = true
-		// uni.showToast({
-		// 	title: '发送成功',
-		// 	icon: 'success'
-		// })
+		if (!anonymousSendRadio.value) {
+			showBindingPhone.value = true
+			return;
+		}
+		if (!readAndAppeptRadio.value) {
+			uni.showToast({
+				title: '请阅读并接受《用户协议》、《隐私政策》',
+				icon: 'none'
+			})
+			return;
+		}
+		uni.showToast({
+			title: '发送成功',
+			icon: 'success'
+		})
 	}
 	const changeAnonymousSendRadio = () => {
 		anonymousSendRadio.value = !anonymousSendRadio.value
+		baseFormData.value.anonymousSend = anonymousSendRadio.value
 	}
 	const changeReadAndAppeptRadio = () => {
 		readAndAppeptRadio.value = !readAndAppeptRadio.value

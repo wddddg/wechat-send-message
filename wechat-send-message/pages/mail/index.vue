@@ -6,7 +6,8 @@
 				{{item.name}}
 			</view>
 		</view>
-		<view class="mail-data-list" v-if="true">
+		<BindingPhone v-model:value="showBindingPhone" />
+		<view class="mail-data-list" v-if="bindingPhoneNumber">
 			<view class="mail-data-item" v-for="(item, index) in 10" :key="index" @click="goDetails(item)">
 				<view class="author-name"><label>xxxxx</label>收</view>
 				<view class="mail-item-content">66666666666666 {{ item }}</view>
@@ -20,11 +21,16 @@
 </template>
 
 <script setup>
+	import BindingPhone from '@/components/BindingPhone.vue'
 	import {
 		ref
 	} from 'vue'
+	import {
+		onShow
+	} from '@dcloudio/uni-app'
 	import NoData from '@/components/NoData.vue'
 	const activeIndex = ref(1)
+	const showBindingPhone = ref(false)
 	const tabsList = [{
 		name: '我发出的',
 		type: 1
@@ -37,6 +43,14 @@
 			url: '/mail/Details?id=' + item
 		})
 	}
+	const bindingPhoneNumber = uni.getStorageSync('bindingPhone')
+	onShow(() => {
+		if (!bindingPhoneNumber) {
+			setTimeout(() => {
+				showBindingPhone.value = true
+			}, 0)
+		}
+	})
 </script>
 
 <style scoped lang="scss">
