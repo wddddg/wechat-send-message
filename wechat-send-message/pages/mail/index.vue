@@ -7,8 +7,8 @@
 			</view>
 		</view>
 		<BindingPhone v-model:value="showBindingPhone" />
-		<view class="mail-data-list" v-if="bindingPhoneNumber">
-			<view class="mail-data-item" v-for="(item, index) in 10" :key="index" @click="goDetails(item)">
+		<view class="mail-data-list" v-if="dataList.length">
+			<view class="mail-data-item" v-for="(item, index) in dataList" :key="index" @click="goDetails(item)">
 				<view class="author-name"><label>xxxxx</label>收</view>
 				<view class="mail-item-content">66666666666666 {{ item }}</view>
 				<view class="mail-item-time">2023-03-03 10:34:41</view>
@@ -31,6 +31,7 @@
 	import NoData from '@/components/NoData.vue'
 	const activeIndex = ref(1)
 	const showBindingPhone = ref(false)
+	const dataList = ref(['1','5','4','3','2'])
 	const bindingPhoneNumber = uni.getStorageSync('bindingPhone')
 	const tabsList = [{
 		name: '我发出的',
