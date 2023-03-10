@@ -11,6 +11,14 @@
 			</view>
 			<view><button class="recharge-btn" @click="shareToggle">充值</button></view>
 		</view>
+		<view class="clear-binding-phone-number" @click="clearBindingPhone">
+			<view>
+				清除绑定的手机号码
+			</view>
+			<view class="right-icon-box">
+				<uni-icons type="right" size="24"></uni-icons>
+			</view>
+		</view>
 	</view>
 	<uni-popup ref="bottomPopup" type="bottom" safeArea backgroundColor="#fff">
 		<view class="select-set-meal-list">
@@ -44,15 +52,21 @@
 	const shareToggle = () => {
 		bottomPopup.value.open()
 	}
+	const clearBindingPhone = () => {
+		uni.removeStorageSync('bindingPhone')
+		uni.showToast({
+			title: '清除成功',
+			icon: "success"
+		})
+	}
 </script>
 
 <style scoped lang="scss">
 	.mine-box {
-		height: 140rpx;
 		padding: 40rpx;
 
 		.mine-send-message-box {
-			height: 100%;
+			height: 140rpx;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
@@ -94,6 +108,22 @@
 				font-size: 30rpx;
 			}
 		}
+
+		.clear-binding-phone-number {
+			height: 50rpx;
+			line-height: 50rpx;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 20rpx;
+			margin: 30rpx 0;
+			border-radius: 20rpx;
+			box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+			.right-icon-box {
+				color: #909399;
+			}
+		}
 	}
 
 	.select-set-meal-list {
@@ -120,7 +150,8 @@
 
 		.select-set-meal-item {
 			display: flex;
-			border: 2rpx solid rgba(22,42,137, .1);
+			border: 2rpx solid rgba(22, 42, 137, .1);
+
 			.item-money-one {
 				display: inline-block;
 				font-size: 24rpx;
@@ -134,27 +165,31 @@
 					color: #000;
 				}
 			}
-			.item-money-text{
+
+			.item-money-text {
 				width: 100%;
 				padding: 0 10rpx;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				.message-text-tip{
+
+				.message-text-tip {
 					font-size: 30rpx;
-					label{
+
+					label {
 						font-size: 24rpx;
 						color: #909399;
 						margin-top: 10rpx;
 					}
 				}
-				.pay-message-btn{
+
+				.pay-message-btn {
 					color: #fff;
 					font-size: 24rpx;
 					height: 60rpx;
 					border-radius: 60rpx;
 					line-height: 60rpx;
-					background: rgb(22,42,137);
+					background: rgb(22, 42, 137);
 				}
 			}
 		}

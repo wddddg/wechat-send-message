@@ -67,8 +67,9 @@
 	const baseFormData = ref({})
 	const anonymousSendRadio = ref(false)
 	const readAndAppeptRadio = ref(false)
+	const bindingPhoneNumber = uni.getStorageSync('bindingPhone')
 	const sendMessage = () => {
-		if (!anonymousSendRadio.value) {
+		if (!anonymousSendRadio.value && !bindingPhoneNumber) {
 			showBindingPhone.value = true
 			return;
 		}

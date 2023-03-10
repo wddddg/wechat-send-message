@@ -31,6 +31,7 @@
 	import NoData from '@/components/NoData.vue'
 	const activeIndex = ref(1)
 	const showBindingPhone = ref(false)
+	const bindingPhoneNumber = uni.getStorageSync('bindingPhone')
 	const tabsList = [{
 		name: '我发出的',
 		type: 1
@@ -43,7 +44,6 @@
 			url: '/mail/Details?id=' + item
 		})
 	}
-	const bindingPhoneNumber = uni.getStorageSync('bindingPhone')
 	onShow(() => {
 		if (!bindingPhoneNumber) {
 			setTimeout(() => {

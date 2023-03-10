@@ -51,13 +51,11 @@
 		if (showCountDown.value) {
 			return;
 		}
-		console.log(2);
 		showCountDown.value = true
 		countDownFunc()
 	}
 	const countDownFunc = () => {
 		timer = setInterval(() => {
-			console.log(1);
 			if (showCountDown.value) {
 				return count.value--
 			}
