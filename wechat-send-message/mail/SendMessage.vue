@@ -11,6 +11,7 @@
 					<view>
 						<uni-forms-item label="手机号">
 							<uni-easyinput v-model="baseFormData.phone" placeholder="请输入对方手机号" />
+							<view class="content-tip">每天只能发送5条短信</view>
 						</uni-forms-item>
 					</view>
 					<view>
@@ -50,7 +51,7 @@
 					<button class="send-message-btn" @click="sendMessage">发送</button>
 				</view>
 				<view class="send-message-price">短信发送价格1元/条</view>
-				<view class="use-help">使用帮助</view>
+				<view class="use-help" @click="goUserAgreement(3)">使用帮助</view>
 			</view>
 		</view>
 		<BindingPhone v-model:value="showBindingPhone" />
