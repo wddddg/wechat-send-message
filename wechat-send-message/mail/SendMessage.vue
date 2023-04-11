@@ -16,7 +16,7 @@
 					</view>
 					<view>
 						<uni-forms-item label="内容">
-							<uni-easyinput type="textarea" v-model="baseFormData.content"
+							<uni-easyinput type="textarea" v-model="baseFormData.message"
 								placeholder="请输入短信内容(把想说的话或秘密告诉Ta吧)" />
 							<view class="content-tip">{{ 0 }}/350 66字1条, 共1条1元</view>
 						</uni-forms-item>
@@ -60,6 +60,7 @@
 
 <script setup>
 	import BindingPhone from '@/components/BindingPhone.vue'
+	import { sendMessage as sendMessageRequest} from '@/api/mail.js'
 	import {
 		ref,
 		unref
@@ -81,9 +82,18 @@
 			})
 			return;
 		}
-		uni.showToast({
-			title: '发送成功',
-			icon: 'success'
+		sendMessageRequest(baseFormData.value).then(res =>{
+			if(res.code != 0){
+				uni.showToast({
+					title: res.msg,
+					icon: 'error'
+				})
+			}else{
+				uni.showToast({
+					title: res.msg,
+					icon: 'success'
+				})
+			}
 		})
 	}
 	const changeAnonymousSendRadio = () => {
