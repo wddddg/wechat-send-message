@@ -1,2 +1,2 @@
-const baseURL = 'http://miniapp.ityzs.cn/wx'
+const baseURL = 'https://miniapp.ityzs.cn/wx'
 export default baseURL
