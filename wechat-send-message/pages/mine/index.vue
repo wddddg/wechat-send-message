@@ -45,11 +45,13 @@
 </template>
 
 <script setup>
+	import { getSetmealList } from '@/api/setmeal.js'
 	import {
 		ref
 	} from 'vue'
 	const bottomPopup = ref(null)
-	const shareToggle = () => {
+	const shareToggle = async() => {
+		await getSetmealList()
 		bottomPopup.value.open()
 	}
 	const clearBindingPhone = () => {
