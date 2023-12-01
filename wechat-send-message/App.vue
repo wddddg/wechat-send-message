@@ -25,9 +25,9 @@
 						success: async (loginRes) => {
 							await login(loginRes.code).then(res => {
 								const {
-									data
+									token
 								} = res
-								uni.setStorageSync('token', data.token)
+								uni.setStorageSync('token', token)
 							})
 						}
 					});

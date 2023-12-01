@@ -13,7 +13,7 @@ $http.interceptors.request.use(
 		if (!config.noToken) {
 			let token = uni.getStorageSync("token");
 			if (token) {
-				config.header['X-Access-Token'] = token;
+				config.header['Authorization'] = token;
 			} else {
 				uni.$emit('loginError')
 			};
