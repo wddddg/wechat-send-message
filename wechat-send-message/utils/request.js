@@ -37,14 +37,9 @@ $http.interceptors.response.use(
 				icon: "none"
 			});
 		}
-		if (response.data.code == 510) {
+		if (response.data.code == 401) {
 			uni.removeStorageSync('token')
 			uni.$emit('loginError')
-			uni.showToast({
-				title: '操作过时，请重新登录',
-				duration: 1000,
-				icon: "none"
-			});
 		}
 		return response.data
 	},

@@ -3,11 +3,11 @@
 		<view class="mine-send-message-box">
 			<view class="mine-sent-out-message">
 				<view class="message-title">我发送出的短信</view>
-				<view class="residual-quantity"><label>0</label>条</view>
+				<view class="residual-quantity"><label>{{ user.sendMessageNumber }}</label>条</view>
 			</view>
 			<view class="mine-sent-out-message">
 				<view class="message-title">剩余短信数量</view>
-				<view class="residual-quantity"><label>0</label>条</view>
+				<view class="residual-quantity"><label>{{ user.balance }}</label>条</view>
 			</view>
 			<view><button class="recharge-btn" @click="shareToggle">充值</button></view>
 		</view>
@@ -24,19 +24,19 @@
 		<view class="select-set-meal-list">
 			<view class="select-set-meal-title">
 				<view>选择套餐</view>
-				<view>剩余短信: 0条</view>
+				<view>剩余短信: {{ user.balance }}条</view>
 			</view>
-			<view class="select-set-meal-item" v-for="(item, index) in 8" :key="index">
+			<view class="select-set-meal-item" v-for="(item, index) in sysSetmealList" :key="index">
 				<view class="item-money-one">
-					￥<label>{{item}}.00</label>/条
+					￥<label>{{item.price}}.00</label>/条
 				</view>
 				<view class="item-money-text">
 					<view class="message-text-tip">
-						<view>1条短信</view>
-						<label>单价高 不推荐</label>
+						<view>{{ item.number }}条短信</view>
+						<label>{{ item.remark }}</label>
 					</view>
 					<view>
-						<button class="pay-message-btn">￥{{item}}</button>
+						<button class="pay-message-btn">￥{{item.price}}</button>
 					</view>
 				</view>
 			</view>
@@ -49,9 +49,13 @@
 	import {
 		ref
 	} from 'vue'
+	const sysSetmealList = ref([])
 	const bottomPopup = ref(null)
+	const user = ref({})
 	const shareToggle = async() => {
-		await getSetmealList()
+		await getSetmealList().then(res => {
+			sysSetmealList.value = res.rows
+		})
 		bottomPopup.value.open()
 	}
 	const clearBindingPhone = () => {
@@ -61,6 +65,7 @@
 			icon: "success"
 		})
 	}
+	user.value = uni.getStorageSync('user')
 </script>
 
 <style scoped lang="scss">

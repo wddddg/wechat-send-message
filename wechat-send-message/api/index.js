@@ -10,3 +10,11 @@ export const login = (code) => {
 		}
 	});
 }
+
+
+// 获取用户详细信息
+export const getInfo = () => {
+  return $http.get({
+    url: '/applet/getInfo'
+  })
+}

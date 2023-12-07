@@ -1,6 +1,6 @@
 <script>
 	import {
-		login
+		login, getInfo
 	} from '@/api/index.js'
 	export default {
 		onLaunch: async function() {
@@ -28,9 +28,16 @@
 									token
 								} = res
 								uni.setStorageSync('token', token)
+								getInfo().then(res => {
+									uni.setStorageSync("user", res.user);
+								})
 							})
 						}
 					});
+				} else {
+					await getInfo().then(res => {
+						uni.setStorageSync("user", res.user);
+					})
 				}
 			}
 		}

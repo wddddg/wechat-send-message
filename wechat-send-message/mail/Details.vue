@@ -1,7 +1,7 @@
 <template>
 	<view class="details-body">
 		<view class="details-title">
-			xxxxxxxxxxxxxxxxxx
+			{{ herselfPhone }}
 		</view>
 		<view class="details-content">
 			<view class="details-content-list" v-for="(item, index) in 10" :key="index">
@@ -27,17 +27,22 @@
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
+	import { ref } from "vue";
+	const herselfPhone = ref('')
 	onLoad((value) => {
-		console.log(value);
+		herselfPhone.value = value.phone
 	})
 </script>
 
 <style scoped lang="scss">
 	.details-body {
-		padding: 0 20rpx;
+		margin: 0 20rpx;
+		border-radius: 20rpx;
+		background-color: #fff;
+		border: 1px solid #fff;
 
 		.details-title {
-			margin: 40rpx 0;
+			margin: 20rpx 0;
 			text-align: center;
 			font-size: 40rpx;
 			font-weight: 800;
@@ -45,9 +50,6 @@
 
 		.details-content {
 			padding: 20rpx 40rpx;
-			background-color: #fff;
-			border-radius: 20rpx;
-
 			.details-content-time {
 				color: #909399;
 				font-size: 24rpx;

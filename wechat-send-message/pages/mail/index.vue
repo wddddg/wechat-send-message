@@ -2,16 +2,16 @@
 	<view class="mail-box">
 		<view class="tabs">
 			<view v-for="(item, index) in tabsList" :key="item.type" class="tabs-item"
-				:class="{'active-tabs-item': activeIndex === item.type}" @click="activeIndex = item.type">
+				:class="{'active-tabs-item': activeIndex === item.type}" @click="changeActiveIndex(item.type)">
 				{{item.name}}
 			</view>
 		</view>
 		<BindingPhone v-model:value="showBindingPhone" />
 		<view class="mail-data-list" v-if="dataList.length">
-			<view class="mail-data-item" v-for="(item, index) in dataList" :key="index" @click="goDetails(item)">
-				<view class="author-name"><label>xxxxx</label>收</view>
-				<view class="mail-item-content">66666666666666 {{ item }}</view>
-				<view class="mail-item-time">2023-03-03 10:34:41</view>
+			<view class="mail-data-item" v-for="(item, index) in dataList" :key="index" @click="goDetails(item.phone)">
+				<view class="author-name"><label>{{ item.phone }}</label>收</view>
+				<view class="mail-item-content">{{ item.informationContext }}</view>
+				<view class="mail-item-time">{{ item.accessTime }}</view>
 			</view>
 		</view>
 		<view class="no-mail-data" v-else>
@@ -29,10 +29,11 @@
 		onShow
 	} from '@dcloudio/uni-app'
 	import NoData from '@/components/NoData.vue'
+	import { getUserMessage, getInformationByPhone } from '@/api/mail.js'
 	const activeIndex = ref(1)
 	const showBindingPhone = ref(false)
-	const dataList = ref(['1','5','4','3','2'])
-	const bindingPhoneNumber = uni.getStorageSync('bindingPhone')
+	const dataList = ref([])
+	const user = uni.getStorageSync('user')
 	const tabsList = [{
 		name: '我发出的',
 		type: 1
@@ -42,15 +43,31 @@
 	}]
 	const goDetails = (item) => {
 		uni.navigateTo({
-			url: '/mail/Details?id=' + item
+			url: '/mail/Details?phone=' + item
 		})
 	}
+	const getDataList = () => {
+		if (activeIndex.value === 1) {
+			getUserMessage().then(res => {
+				dataList.value = res.rows
+			})
+		} else {
+			getInformationByPhone().then(res => {
+				dataList.value = res.rows
+			})
+		}
+	}
+	const changeActiveIndex = (type) => {
+		activeIndex.value = type
+		getDataList()
+	}
 	onShow(() => {
-		if (!bindingPhoneNumber) {
+		if (!user.phone) {
 			setTimeout(() => {
 				showBindingPhone.value = true
 			}, 0)
 		}
+		getDataList()
 	})
 </script>
 
